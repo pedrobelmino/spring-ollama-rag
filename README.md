@@ -54,6 +54,20 @@ public class RadarResponse {
 
 O LangChain4j instrui o modelo a preencher esses campos com base na análise do documento PDF. Isso facilita o consumo da resposta por front-ends ou outros serviços, pois garante que sempre teremos o nome da tecnologia, a recomendação (anel) e a explicação separadamente.
 
+## Cache Semântico (`SemanticCacheService`)
+
+Para otimizar o tempo de resposta e simular um "aprendizado" do sistema, implementamos um cache semântico.
+
+Diferente de um cache tradicional que compara strings exatas, o cache semântico utiliza **embeddings** (vetores numéricos que representam o significado do texto) para identificar perguntas similares.
+
+**Como funciona:**
+1.  Quando uma pergunta chega, ela é convertida em um vetor (embedding).
+2.  O sistema compara esse vetor com os vetores das perguntas já respondidas e armazenadas em memória.
+3.  Se a similaridade (cosseno) for superior a **70%**, o sistema retorna a resposta armazenada anteriormente, evitando uma nova chamada lenta ao modelo LLM.
+4.  Caso contrário, a pergunta é processada pelo Ollama e o novo par (pergunta vetorizada + resposta) é salvo no cache.
+
+Isso permite que perguntas como "O que é Java?" e "Me explique sobre Java" sejam tratadas como a mesma consulta, retornando a resposta instantaneamente na segunda vez.
+
 ## Como Executar
 
 1.  Coloque o seu arquivo PDF (ex: `document.pdf`) na pasta `src/main/resources`.

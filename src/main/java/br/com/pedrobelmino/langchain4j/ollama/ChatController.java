@@ -7,14 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ChatController {
 
-    private final CustomerSupportAgent agent;
+    private final SemanticCacheService cacheService;
 
-    public ChatController(CustomerSupportAgent agent) {
-        this.agent = agent;
+    public ChatController(SemanticCacheService cacheService) {
+        this.cacheService = cacheService;
     }
 
     @GetMapping("/chat")
     public RadarResponse chat(@RequestParam(value = "message", defaultValue = "Hello") String message) {
-        return agent.chat(message);
+        return cacheService.chat(message);
     }
 }
