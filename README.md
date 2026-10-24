@@ -84,3 +84,7 @@ curl "http://localhost:8080/chat?message=Qual%20a%20recomendação%20para%20Plat
 ```
 
 Ou via navegador: `http://localhost:8080/chat?message=Sua pergunta aqui`
+
+## Licença
+
+MIT — veja [LICENSE](LICENSE).
